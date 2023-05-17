@@ -40,8 +40,10 @@ struct HelloWorldParams {
 /// You can read more about handlers [here](https://docs.rs/axum/latest/axum/handler/index.html)
 async fn hello_world(Query(params): Query<HelloWorldParams>) -> Json<HelloWorldMessage> {
     let message = if let Some(name) = params.name {
+        tracing::info!("{} passed to hello_world handler!", name);
         format!("Hello {}!", name)
     } else {
+        tracing::info!("No name passed to hello_world handler!");
         "Hello World!".to_string()
     };
 
