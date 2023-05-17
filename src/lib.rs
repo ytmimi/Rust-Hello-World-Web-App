@@ -1,7 +1,7 @@
-use axum::response::Json;
+use axum::extract::{Json, Query};
 use axum::routing::get;
 use axum::Router;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 /// Build our application with a router
 /// Note: `get_app` is marked as `pub` so that it's "public" and accessible from outside of our
@@ -30,10 +30,21 @@ struct HelloWorldMessage {
     message: String,
 }
 
+#[derive(Deserialize)]
+#[repr(transparent)]
+struct HelloWorldParams {
+    name: Option<String>,
+}
+
 /// Returns a Hello World message to the user!
 /// You can read more about handlers [here](https://docs.rs/axum/latest/axum/handler/index.html)
-async fn hello_world() -> Json<HelloWorldMessage> {
-    let message = "Hello World!";
+async fn hello_world(Query(params): Query<HelloWorldParams>) -> Json<HelloWorldMessage> {
+    let message = if let Some(name) = params.name {
+        format!("Hello {}!", name)
+    } else {
+        "Hello World!".to_string()
+    };
+
     Json(HelloWorldMessage {
         message: message.to_owned(),
     })
