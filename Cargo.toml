@@ -6,3 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+axum = "0.6.18"
+# We didn't talk about 'features` during the presentation, but they allow crates to
+# conditionally compile code. The nice thing about features is you can turn off the ones
+# you don't need and that can sometimes speed up compile times.
+serde = { version = "1.0.163", features = ["derive"] }
+tokio = { version = "1.28.1", features = ["full"] }
