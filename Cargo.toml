@@ -12,3 +12,7 @@ axum = "0.6.18"
 # you don't need and that can sometimes speed up compile times.
 serde = { version = "1.0.163", features = ["derive"] }
 tokio = { version = "1.28.1", features = ["full"] }
+hyper = { version = "0.14", features = ["full"] }
+
+[dev-dependencies]
+tower = { version = "0.4", features = ["util"] }
